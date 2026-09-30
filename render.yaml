@@ -1,0 +1,48 @@
+# SF19 Coach — Render Blueprint (free static site).
+# Every file of the site is in this folder (already built). `npm run build` (build-site.mjs) only downloads
+# Stockfish 19 (WebAssembly) from the official npm package, verifies its checksum and assembles dist/.
+services:
+  - type: web
+    runtime: static
+    name: sf19-coach
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: SKIP_INSTALL_DEPS
+        value: "true"
+    headers:
+      # Cross-origin isolation → SharedArrayBuffer → multi-threaded Stockfish
+      - path: /*
+        name: Cross-Origin-Opener-Policy
+        value: same-origin
+      - path: /*
+        name: Cross-Origin-Embedder-Policy
+        value: require-corp
+      - path: /*
+        name: Cross-Origin-Resource-Policy
+        value: same-origin
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      # The engine never changes → cache it for a year (downloaded only once)
+      - path: /engine/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      # Always revalidate the app itself so updates show up immediately
+      - path: /
+        name: Cache-Control
+        value: no-cache
+      - path: /index.html
+        name: Cache-Control
+        value: no-cache
+      - path: /sw.js
+        name: Cache-Control
+        value: no-cache
+      - path: /app.js
+        name: Cache-Control
+        value: no-cache
+      - path: /app.css
+        name: Cache-Control
+        value: no-cache

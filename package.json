@@ -1,0 +1,13 @@
+{
+  "name": "sf19-coach-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SF19 Coach — ready-built site. `npm run build` downloads Stockfish 19 (WASM) and assembles dist/.",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "build": "node build-site.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
