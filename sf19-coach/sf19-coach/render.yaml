@@ -1,0 +1,44 @@
+# Render Blueprint — New → Blueprint → pick this repository → Apply.
+# Builds the app (downloads Stockfish 19 WASM from npm) and serves it as a free static site.
+services:
+  - type: web
+    runtime: static
+    name: sf19-coach
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: SKIP_INSTALL_DEPS
+        value: "true"
+    headers:
+      # Cross-origin isolation → SharedArrayBuffer → multi-threaded Stockfish
+      - path: /*
+        name: Cross-Origin-Opener-Policy
+        value: same-origin
+      - path: /*
+        name: Cross-Origin-Embedder-Policy
+        value: require-corp
+      - path: /*
+        name: Cross-Origin-Resource-Policy
+        value: same-origin
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      # Versioned files never change → cache forever (the 94 MB engine is downloaded only once)
+      - path: /engine/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      # Always revalidate the entry points so updates show up
+      - path: /
+        name: Cache-Control
+        value: no-cache
+      - path: /index.html
+        name: Cache-Control
+        value: no-cache
+      - path: /sw.js
+        name: Cache-Control
+        value: no-cache

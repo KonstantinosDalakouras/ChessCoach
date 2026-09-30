@@ -1,0 +1,25 @@
+{
+  "name": "sf19-coach",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Stockfish 19 chess trainer: play, get coached, review and analyse — runs fully in the browser (WASM).",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "serve": "node scripts/serve.mjs",
+    "start": "node scripts/build.mjs && node scripts/serve.mjs",
+    "test": "node tests/engine.test.mjs && node tests/review.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@lichess-org/chessground": "10.4.1",
+    "@preact/signals": "2.11.2",
+    "chessops": "0.15.1",
+    "esbuild": "0.28.2",
+    "preact": "10.29.8",
+    "stockfish": "19.0.0"
+  }
+}

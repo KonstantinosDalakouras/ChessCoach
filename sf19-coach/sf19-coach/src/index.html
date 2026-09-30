@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="el" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SF19 Coach — Stockfish 19</title>
+  <meta name="description" content="Παίξε με το Stockfish 19, πάρε σχόλια σε κάθε κίνηση, ανάλυσε τις παρτίδες σου και εξασκήσου στα λάθη σου. Τρέχει εξ ολοκλήρου στον browser.">
+  <meta name="theme-color" content="#0f1115">
+  <meta name="color-scheme" content="dark light">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="app-version" content="%VERSION%">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="%APP_CSS%">
+  <script>
+    // Apply theme/language before first paint (no flash).
+    (function () {
+      try {
+        var s = JSON.parse(localStorage.getItem('sf19c.settings.v1') || '{}');
+        var th = s.theme || 'dark';
+        if (th === 'system') th = window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.dataset.theme = th;
+        document.documentElement.lang = s.lang || 'el';
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <div id="app"><div class="boot"><div class="spinner" style="width:28px;height:28px"></div></div></div>
+  <noscript>SF19 Coach needs JavaScript. / Το SF19 Coach χρειάζεται JavaScript.</noscript>
+  <script type="module" src="%APP_JS%"></script>
+</body>
+</html>
